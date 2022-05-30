@@ -138,11 +138,11 @@ class Company:
             return False
 
     def __str__(self):
-        return "(" + self.name + " " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
+        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
                 + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
 
     def __repr__(self):
-        return "(" + self.name + " " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
+        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
                + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
 
     def __lt__(self, other):
@@ -229,8 +229,8 @@ class Company:
         stocks_num = self.stocks_num + other.stocks_num
         market_cap = self.net_worth() + other.net_worth()
         stock_price = market_cap / stocks_num
-        return "(" + name + " " + str(stocks_num) + "stocks, Price: " + str(stock_price) + ", " + comp_type + \
-               ", Net Worth: " + str(market_cap) + ")"
+        return Company(name, stocks_num, stock_price, comp_type)
+
 
 a = Company("Google", 45, 47, "High")
 print(a)
