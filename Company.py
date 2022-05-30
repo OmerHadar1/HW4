@@ -138,12 +138,12 @@ class Company:
             return False
 
     def __str__(self):
-        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
-                + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
+        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price:" + str(self.stock_price) + ", " \
+                + self.comp_type + ", Net Worth:" + str(self.net_worth()) + ")"
 
     def __repr__(self):
-        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
-               + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
+        return "(" + self.name + ", " + str(self.stocks_num) + " stocks, Price:" + str(self.stock_price) + ", " \
+               + self.comp_type + ", Net Worth:" + str(self.net_worth()) + ")"
 
     def __lt__(self, other):
         if type(other) == Company:
