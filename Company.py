@@ -1,10 +1,15 @@
 class Company:
-    @staticmethod  # methods for checking valid input
+    @staticmethod
     def valid_str(str_name):
-        name_l = slice(str_name, step=" ")
+        """
+        checks valid name
+        :param: str
+        :return: bool
+        """
+        name_l = str_name.split()
         valid_val = True
-        for i in range(name_l):
-            if len(name_l[i]) < 2 and not name_l[i][0].isupper:
+        for i in range(len(name_l)):
+            if len(name_l[i]) < 2 or not name_l[i][0].isupper():
                 valid_val = False
             else:
                 pass
@@ -133,23 +138,12 @@ class Company:
             return False
 
     def __str__(self):
-        return "(" + self.name + " " + str(self.stocks_num) + "stocks, Price: " + str(self.stock_price) + ", " \
+        return "(" + self.name + " " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
                 + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
 
     def __repr__(self):
-        return "(" + self.name + " " + str(self.stocks_num) + "stocks, Price: " + str(self.stock_price) + ", " \
+        return "(" + self.name + " " + str(self.stocks_num) + " stocks, Price: " + str(self.stock_price) + ", " \
                + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
-
-    @staticmethod
-    def comparison_func(comparison_type, comparison_op):
-        """
-        this function get the comparison type and the and comparison operators and make the operator following the \
-        comparison type
-        :param comparison_type: str
-        :param comparison_op: str
-        :return: func
-        """
-
 
     def __lt__(self, other):
         if type(other) == Company:
@@ -238,3 +232,5 @@ class Company:
         return "(" + name + " " + str(stocks_num) + "stocks, Price: " + str(stock_price) + ", " + comp_type + \
                ", Net Worth: " + str(market_cap) + ")"
 
+a = Company("Google", 45, 47, "High")
+print(a)
