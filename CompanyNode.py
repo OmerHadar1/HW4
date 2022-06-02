@@ -161,7 +161,7 @@ class CompanyNode(Company):
             Company.change_comparison_type(cls, comparison_type)
 
     def __lt__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() == other.total_net_wort()
             else:
@@ -172,7 +172,7 @@ class CompanyNode(Company):
             return False
 
     def __gt__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() < other.total_net_wort()
             else:
@@ -183,7 +183,7 @@ class CompanyNode(Company):
             return False
 
     def __eq__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() == other.total_net_wort()
             else:
@@ -194,7 +194,7 @@ class CompanyNode(Company):
             return False
 
     def __ne__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() != other.total_net_wort()
             else:
@@ -205,7 +205,7 @@ class CompanyNode(Company):
             return False
 
     def __ge__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() >= other.total_net_wort()
             else:
@@ -216,7 +216,7 @@ class CompanyNode(Company):
             return False
 
     def __le__(self, other):
-        if type(other) == CompanyNode:
+        if isinstance(other, CompanyNode):
             if CompanyNode._comparison_type == "total sum":
                 return self.total_net_worth() <= other.total_net_wort()
             else:

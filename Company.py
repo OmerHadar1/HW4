@@ -149,7 +149,7 @@ class Company:
                + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
 
     def __lt__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() < Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -162,7 +162,7 @@ class Company:
             return False
 
     def __gt__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() > Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -175,7 +175,7 @@ class Company:
             return False
 
     def __eq__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() == Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -188,7 +188,7 @@ class Company:
             return False
 
     def __ge__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() >= Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -201,7 +201,7 @@ class Company:
             return False
 
     def __le__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() <= Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -214,7 +214,7 @@ class Company:
             return False
 
     def __ne__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, Company):
             if Company._comparison_type == "net value":
                 return self.net_worth() != Company.net_worth(other)
             elif Company._comparison_type == "stock num":
@@ -235,6 +235,3 @@ class Company:
         return Company(name, stocks_num, stock_price, comp_type)
 
 
-a = Company("Google", 45, 47, "High")
-b = a.set_name("Gh")
-print(a, b)
