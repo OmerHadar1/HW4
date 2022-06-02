@@ -43,11 +43,7 @@ class CompanyNode(Company):
         """
         if isinstance(child, CompanyNode):
             if child <= self:
-                for boy in child.__children:
-                    if boy in self.__children:
-                        pass
-                    else:
-                        self.__children.append(child)
+                self.__children.append(child)
                 child.__parent = self
                 return True
             else:
@@ -62,8 +58,26 @@ class CompanyNode(Company):
         """
         count = Company.net_worth(self)
         for child in self.__children:
-            count += Company.net_worth(child)
+            count += CompanyNode.total_net_worth(child)
         return count
+
+    @staticmethod
+    def checks_children(self):
+        valid = True
+        for child1 in self.__children:
+            if valid == False or child1.__children == []:
+                return valid
+            elif False in [self >= child2 for child2 in child1.__children]:
+                valid = False
+            else:
+                return valid and CompanyNode.checks_children(child1)
+
+    @staticmethod
+    def find_master_parent(node):
+        if node.__parent is None:
+            return node.__parent
+        else:
+            return CompanyNode.find_master_parent(node.__parent)
 
     def test_node_order_validity(self):
         """
@@ -72,13 +86,9 @@ class CompanyNode(Company):
         otherwise.
         :return: bool
         """
-        valid_children = False not in [self >= child for child in self.__children]
-        if self.__parent is None:
-            return True
-        elif valid_children and CompanyNode.test_node_order_validity(self.__parent):
-            return True
-        else:
-            return False
+        master_parent = CompanyNode.find_master_parent(self)
+        valid = CompanyNode.checks_children(master_parent)
+        return valid
 
     def __len__(self):
         """
@@ -93,10 +103,7 @@ class CompanyNode(Company):
         company and its descendants.
         :return: str
         """
-        res = "[" + Company.__repr__(self)
-        for child in self.__children:
-            res += Company.__repr__(child) + ","
-        return res + "]"
+        return "[" + Company.__repr__(self) + ", " + repr(self.__children) + "]"
 
     def is_ancestor(self, other):
         """
@@ -114,10 +121,11 @@ class CompanyNode(Company):
             raise ValueError("other is not valid")
         else:
             name = Company.__add__(self, other).name
-            comp_type = Company.__add__(self, other).comp_type
             stocks_num = Company.__add__(self, other).stocks_num
             stock_price = Company.__add__(self, other).stock_price
+            comp_type = Company.__add__(self, other).comp_type
             new_company_node = CompanyNode(name, stocks_num, stock_price, comp_type)
+            other.__parent.__children.remove(other)
             new_company_node.__children = self.__children + other.__children
             new_company_node.__parent = copy.deepcopy(self.__parent)
             return new_company_node
