@@ -41,14 +41,14 @@ class CompanyNode(Company):
         :param child: CompanyNode
         :return: bool
         """
-        if type(child) == CompanyNode:
+        if isinstance(child, CompanyNode):
             if child <= self:
-                child.__parent = self
                 for boy in child.__children:
                     if boy in self.__children:
                         pass
                     else:
                         self.__children.append(child)
+                child.__parent = self
                 return True
             else:
                 return False
@@ -72,9 +72,10 @@ class CompanyNode(Company):
         otherwise.
         :return: bool
         """
+        valid_children = False not in [self >= child for child in self.__children]
         if self.__parent is None:
             return True
-        elif [self >= child for child in self.__children] and CompanyNode.test_node_order_validity(self.__parent):
+        elif valid_children and CompanyNode.test_node_order_validity(self.__parent):
             return True
         else:
             return False
@@ -109,13 +110,13 @@ class CompanyNode(Company):
             return False
 
     def __add__(self, other):
-        if other > self.__parent or self in other.__children:
-            raise ValueError + "__add__ other is not valid"
+        if other.is_ancestor(self):
+            raise ValueError("other is not valid")
         else:
             name = Company.__add__(self, other).name
             comp_type = Company.__add__(self, other).comp_type
             stocks_num = Company.__add__(self, other).stocks_num
-            stock_price = Company.__add__(self,other).stock_price
+            stock_price = Company.__add__(self, other).stock_price
             new_company_node = CompanyNode(name, stocks_num, stock_price, comp_type)
             new_company_node.__children = self.__children + other.__children
             new_company_node.__parent = copy.deepcopy(self.__parent)
