@@ -1,4 +1,6 @@
+import copy
 class Company:
+
     @staticmethod
     def valid_str(str_name):
         """
@@ -14,6 +16,8 @@ class Company:
             else:
                 pass
         return valid_val
+
+    _comparison_type = "net value"
 
     def __init__(self, name, stocks_num, stock_price, comp_type):
         if Company.valid_str(name):
@@ -38,15 +42,12 @@ class Company:
             raise ValueError + "Company type is not valid, mus be long then one character, have first letter in" \
                   + " upper case and only one character of space between each word"
 
-        self.__comparison_type = "net value"
-
     def net_worth(self):
         """
         This function return the market cap, calculate the company's market cap
         :return: float or int
         """
-        market_cap = self.stocks_num * self.stock_price
-        return market_cap
+        return self.stocks_num * self.stock_price
 
     def set_name(self, name):
         """
@@ -75,11 +76,11 @@ class Company:
 
     def set_stock_price(self, stock_price):
         """
-        this function change the stocks_num and the stocks_num following the new stocks_price
+        this function change the stocks_num and the stocks_price following the new stocks_price
         :param stock_price: float or int
         :return: bool
         """
-        if isinstance(stock_price, int) or isinstance(stock_price, float):
+        if type(stock_price) is int or type(stock_price) is float:
             if self.net_worth() > stock_price:
                 self.stocks_num = int(self.net_worth() // stock_price)
                 self.stock_price = stock_price
@@ -107,7 +108,7 @@ class Company:
         :param net_worth: int or float
         :return: bool
         """
-        if (isinstance(net_worth, int) or isinstance(net_worth, float)) and net_worth > 0:
+        if (type(net_worth) is int or type(net_worth) is float) and (net_worth > 0):
             self.stock_price = net_worth / self.stocks_num
             return True
         else:
@@ -125,14 +126,16 @@ class Company:
 
     @classmethod
     def change_comparison_type(cls, comparison_type):
+        if cls._comparison_type is comparison_type:
+            return True
         if comparison_type == "stock num":
-            Company.__comparison_type = comparison_type
+            cls._comparison_type = comparison_type
             return True
         elif comparison_type == "stock price":
-            Company.__comparison_type = comparison_type
+            cls._comparison_type = comparison_type
             return True
         elif comparison_type == "net value":
-            Company.__comparison_type = comparison_type
+            cls._comparison_type = comparison_type
             return True
         else:
             return False
@@ -146,86 +149,86 @@ class Company:
                + self.comp_type + ", Net Worth: " + str(self.net_worth()) + ")"
 
     def __lt__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() < Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num < other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price < other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __gt__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() > Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num > other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price > other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __eq__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() == Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num == other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price == other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __ge__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() >= Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num >= other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price >= other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __le__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() <= Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num <= other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price <= other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __ne__(self, other):
-        if type(other) == Company:
-            if Company.__comparison_type == "net value":
+        if type(other) == type(self):
+            if Company._comparison_type == "net value":
                 return self.net_worth() != Company.net_worth(other)
-            elif Company.__comparison_type == "stock num":
+            elif Company._comparison_type == "stock num":
                 return self.stocks_num != other.stocks_num
-            elif Company.__comparison_type == "stock price":
+            elif Company._comparison_type == "stock price":
                 return self.stock_price != other.stock_price
             else:
-                raise ValueError + "_comparison_type"
+                raise ValueError("_comparison_type")
         else:
             return False
 
     def __add__(self, other):
-        name = self.name
-        comp_type = self.comp_type
+        name = copy.deepcopy(self.name)
+        comp_type = copy.deepcopy(self.comp_type)
         stocks_num = self.stocks_num + other.stocks_num
         market_cap = self.net_worth() + other.net_worth()
         stock_price = market_cap / stocks_num
