@@ -108,7 +108,7 @@ class Company:
         :param net_worth: int or float
         :return: bool
         """
-        if (type(net_worth) is int or type(net_worth) is float) and (net_worth > 0):
+        if (isinstance(net_worth, int) or isinstance(net_worth, float)) and (net_worth > 0):
             self.stock_price = net_worth / self.stocks_num
             return True
         else:
